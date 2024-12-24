@@ -1,0 +1,25 @@
+{
+    "manifest_version": 3,
+    "name": "Karim's Chrome Extension",
+    "version": "1.0.0",
+    "permissions": ["tabs","activeTab", "scripting", "clipboardWrite"],
+    "background": {
+        "service_worker": "src/background.js",
+        "type": "module"
+    },
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["src/content.js"]
+        }
+    ],
+    "commands": {
+        "copy_tab_url": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+C",
+                "mac": "Command+Shift+C"
+            },
+            "description": "Copy the current tab's URL to clipboard"
+        }
+    }    
+}
