@@ -19,3 +19,5 @@ This is a simple Chrome extension that copies the current tab URL to the clipboa
 4. Test it out by opening a new tab and going to a URL then pressing the keyboard shortcut
 5. The URL should be copied to the clipboard
 
+<video controls src="docs/img/setting-keyboard-shortcut.mp4" title="Title"></video>
+
