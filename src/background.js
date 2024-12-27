@@ -20,7 +20,7 @@ async function copyToClipboard(tab) {
 chrome.commands.onCommand.addListener(async (command) => {
     if (command === "copy_tab_url") {
         try {
-            const [tab] = await chrome.tabs.query({ active: true });
+            const [tab] = await chrome.tabs.query({ active: true, lastFocusedWindow: true  });
             if (tab && tab.url) {                
                 copyToClipboard(tab);
                 console.log(`Copied URL to clipboard: ${tab.url}`);
