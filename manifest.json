@@ -2,18 +2,35 @@
     "manifest_version": 3,
     "name": "Karim's Chrome Extension",
     "version": "1.0.0",
-    "permissions": ["tabs","activeTab", "scripting", "clipboardWrite"],
+    "permissions": [
+        "tabs",
+        "activeTab",
+        "scripting",
+        "clipboardWrite",
+        "sidePanel",
+        "contextMenus"
+    ],
     "background": {
         "service_worker": "src/background.js",
         "type": "module"
     },
+    "side_panel": {
+        "default_path": "src/sidebar/welcome-sb.html"
+    },
     "content_scripts": [
         {
-            "matches": ["<all_urls>"],
-            "js": ["src/content.js"],
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "src/content.js"
+            ],
             "run_at": "document_end"
         }
     ],
+    "action": {
+        "default_title": "Click to open panel"
+    },
     "commands": {
         "copy_tab_url": {
             "suggested_key": {
@@ -21,6 +38,13 @@
                 "mac": "Command+Shift+C"
             },
             "description": "Copy the current tab's URL to clipboard"
+        },
+        "toggle_sidebar": {
+            "suggested_key": {
+                "default": "Ctrl+S",
+                "mac": "Command+S"
+            },
+            "description": "Toggle sidebar visibility"
         }
-    }    
+    }
 }

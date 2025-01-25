@@ -11,7 +11,7 @@
 
 ## Copy Current Tab URL
 
-This is a simple Chrome extension that copies the current tab URL to the clipboard. It is useful when you want to share the URL with someone or save it for later.  Because it's setup as a command, you can setup a keyboard shortcut for this command by going to the chrome extensions management page and follow these steps:
+This is a simple feature that copies the current tab URL to the clipboard. It is useful when you want to share the URL with someone or save it for later.  Because it's setup as a command, you can setup a keyboard shortcut for this command by going to the chrome extensions management page and follow these steps:
 
 1. In the sidebar, you should see a "Keyboard shortcuts" link. Click on it
 2. Find the "Copy Current Tab URL" command and click on the input field
@@ -21,3 +21,8 @@ This is a simple Chrome extension that copies the current tab URL to the clipboa
 
 <video controls src="docs/img/setting-keyboard-shortcut.mp4" title="Title"></video>
 
+## Close Tabs That Haven't Been Accessed In An Hour
+
+This feature closes tabs that haven't been accessed in an hour. It is useful when you have a lot of tabs open and you want to close the ones you haven't used in a while. 
+
+There is no customization on this yet so it will just close any tab that **hasn't been accessed in 24 hours** and it will **check every hour**.
