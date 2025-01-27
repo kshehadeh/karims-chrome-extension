@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Karim's Chrome Extension Options</title>
+</head>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    h2 {
+        font-size: 18px;
+    }
+
+    section {
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    input[type="checkbox"] {
+        margin-right: 10px;
+    }
+
+    select {
+        margin-left: 10px;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #0074d9;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    #status {
+        margin-top: 10px;
+    }
+</style>
+
+<body>
+    <h1>Settings</h1>
+    <section>
+        <h2>Tab Management</h2>
+        <label>
+            <input type="checkbox" id="auto-close-tabs" />
+            Close old tabs automatically
+        </label>
+        <label>
+            Age of tabs to close automatically
+            <select id="tab-age">
+                <option value="6">6 hours</option>
+                <option value="12">12 hours</option>
+                <option value="24">1 day</option>
+                <option value="72">3 days</option>
+            </select>
+        </label>
+    </section>
+    <section>
+        <h2>Copy Current URL Command</h2>
+        <p><button id="copy-url-open-shortcut-settings">Open Shortcut Settings</button></p>
+    </section>
+    <section>
+        <h2>Actions</h2>
+        <div id="status"></div>
+        <button id="save">Save</button>
+    </section>
+
+    <script src="options.js"></script>
+</body>
+
+</html>

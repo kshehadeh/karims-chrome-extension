@@ -8,7 +8,8 @@
         "scripting",
         "clipboardWrite",
         "sidePanel",
-        "contextMenus"
+        "contextMenus",
+        "storage"
     ],
     "background": {
         "service_worker": "src/background.js",
@@ -46,5 +47,9 @@
             },
             "description": "Toggle sidebar visibility"
         }
+    },
+    "options_ui": {
+        "page": "src/options.html",
+        "open_in_tab": false
     }
 }

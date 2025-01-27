@@ -1,16 +1,19 @@
-const welcomePage = 'src/sidebar/welcome-sb.html';
-const mainPage = 'src/sidebar/main-sb.html';
+import { setupAutoTabCloser } from "./lib/tab-closer.js";
+import { copyToClipboard } from "./lib/copy-url.js";
+
+const welcomePage = "src/sidebar/welcome-sb.html";
+const mainPage = "src/sidebar/main-sb.html";
 
 chrome.runtime.onInstalled.addListener(() => {
     chrome.sidePanel.setOptions({ path: welcomePage });
-  });
+});
 
-  chrome.tabs.onActivated.addListener(async ({ tabId }) => {
+chrome.tabs.onActivated.addListener(async ({ tabId }) => {
     const { path } = await chrome.sidePanel.getOptions({ tabId });
     if (path === welcomePage) {
-      chrome.sidePanel.setOptions({ path: mainPage });
+        chrome.sidePanel.setOptions({ path: mainPage });
     }
-  });  
+});
 
 chrome.runtime.onInstalled.addListener(() => {
     chrome.contextMenus.create({
@@ -20,29 +23,18 @@ chrome.runtime.onInstalled.addListener(() => {
     });
 });
 
+chrome.runtime.onInstalled.addListener(() => {
+    setupAutoTabCloser();
+});
+
+chrome.runtime.onStartup.addListener(() => {
+    setupAutoTabCloser();
+}); 
+
 chrome.sidePanel
     .setPanelBehavior({ openPanelOnActionClick: true })
     .then(() => console.log("Sidebar behavior set"))
     .catch((error) => console.error(error));
-
-async function copyToClipboard(tab) {
-    if (!tab || !tab.id) {
-        return;
-    }
-
-    const url = tab.url;
-    const result = await chrome.tabs.sendMessage(tab.id, {
-        type: "copyToClipboard",
-        text: url,
-        html: "<a href='" + url + "'>" + url + "</a>",
-    });
-
-    if (result && result.success) {
-        console.log("Copied URL to clipboard:", url);
-    } else {
-        console.error("Failed to copy URL to clipboard:", url);
-    }
-}
 
 chrome.commands.onCommand.addListener(async (command) => {
     if (command === "copy_tab_url") {
@@ -53,7 +45,7 @@ chrome.commands.onCommand.addListener(async (command) => {
             });
             if (tab && tab.url) {
                 copyToClipboard(tab);
-                console.log(`Copied URL to clipboard: ${tab.url}`);
+                console.log(`[Karim's Extension] Copied URL to clipboard: ${tab.url}`);
             }
         } catch (error) {
             console.error("Failed to copy URL:", error);
@@ -76,20 +68,3 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
     }
 });
 
-const MAX_TAB_AGE = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
-
-function closeOldTabs() {
-    chrome.tabs.query({}, (tabs) => {
-        const now = Date.now();
-        tabs.forEach((tab) => {
-            if (tab.lastAccessed && (now - tab.lastAccessed) > MAX_TAB_AGE) {
-                chrome.tabs.remove(tab.id, () => {
-                    console.log(`Closed tab with id: ${tab.id} due to inactivity.`);
-                });
-            }
-        });
-    });
-}
-
-// Check for old tabs every hour
-setInterval(closeOldTabs, 1000*60*60);
