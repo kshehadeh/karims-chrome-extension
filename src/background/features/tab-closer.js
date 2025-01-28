@@ -37,3 +37,13 @@ export function closeOldTabs(ageOfTabsInMilliseconds = MAX_TAB_AGE) {
         });
     });
 }
+
+export default function setup() {
+    chrome.runtime.onInstalled.addListener(() => {
+        setupAutoTabCloser();
+    });
+    
+    chrome.runtime.onStartup.addListener(() => {
+        setupAutoTabCloser();
+    });    
+}

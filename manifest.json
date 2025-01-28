@@ -16,7 +16,7 @@
         "type": "module"
     },
     "side_panel": {
-        "default_path": "src/sidebar/welcome-sb.html"
+        "default_path": "src/content/features/sidebar/welcome-sb.html"
     },
     "content_scripts": [
         {
@@ -26,9 +26,14 @@
             "js": [
                 "src/content.js"
             ],
-            "run_at": "document_end"
+            "run_at": "document_end",
+            "type": "module"
         }
     ],
+    "web_accessible_resources": [{
+        "matches": ["<all_urls>"],
+        "resources": ["src/content/features/copy-url/index.js"]
+    }],    
     "action": {
         "default_title": "Click to open panel"
     },
@@ -49,7 +54,7 @@
         }
     },
     "options_ui": {
-        "page": "src/options.html",
+        "page": "src/options/options.html",
         "open_in_tab": false
     }
 }
