@@ -7,16 +7,12 @@
         "activeTab",
         "scripting",
         "clipboardWrite",
-        "sidePanel",
         "contextMenus",
         "storage"
     ],
     "background": {
         "service_worker": "src/background.js",
         "type": "module"
-    },
-    "side_panel": {
-        "default_path": "src/content/features/sidebar/welcome-sb.html"
     },
     "content_scripts": [
         {
@@ -48,13 +44,6 @@
         },
         "close_old_tabs": {
             "description": "Close tabs that are older than the configured time"
-        },
-        "toggle_sidebar": {
-            "suggested_key": {
-                "default": "Ctrl+S",
-                "mac": "Command+S"
-            },
-            "description": "Toggle sidebar visibility"
         }
     },
     "options_ui": {
