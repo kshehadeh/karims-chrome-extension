@@ -38,12 +38,16 @@
         "default_title": "Click to open panel"
     },
     "commands": {
+        
         "copy_tab_url": {
             "suggested_key": {
                 "default": "Ctrl+Shift+C",
                 "mac": "Command+Shift+C"
             },
             "description": "Copy the current tab's URL to clipboard"
+        },
+        "close_old_tabs": {
+            "description": "Close tabs that are older than the configured time"
         },
         "toggle_sidebar": {
             "suggested_key": {
