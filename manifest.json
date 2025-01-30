@@ -8,8 +8,15 @@
         "scripting",
         "clipboardWrite",
         "contextMenus",
-        "storage"
+        "storage",
+        "notifications"
     ],
+    "icons": {
+        "16": "src/img/logo_16x16.png",
+        "32": "src/img/logo_32x32.png",
+        "48": "src/img/logo_48x48.png",
+        "128": "src/img/logo_128x128.png"
+    },
     "background": {
         "service_worker": "src/background.js",
         "type": "module"
@@ -28,7 +35,11 @@
     ],
     "web_accessible_resources": [{
         "matches": ["<all_urls>"],
-        "resources": ["src/content/features/copy-url/index.js"]
+        "resources": [
+            "img/logo.png",
+            "src/content/features/copy-url/index.js",
+            "src/content/features/tab-closer/index.js"
+        ]
     }],    
     "action": {
         "default_title": "Click to open panel"
