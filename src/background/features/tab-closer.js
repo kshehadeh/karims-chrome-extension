@@ -1,4 +1,5 @@
-const MAX_TAB_AGE = 12 * 60 * 60 * 1000; // 24 hours in milliseconds
+const MAX_TAB_AGE = 12 * 60 * 60 * 1000; // 12 hours in milliseconds
+const MAX_FROZEN_TAB_AGE = 1 * 60 * 60 * 1000; // 24 hours in milliseconds
 
 export async function getOptions() {
     return await chrome.storage.sync.get(["tabAge", "autoCloseTabsToggle"]);
@@ -55,7 +56,7 @@ export async function setupAutoTabCloser() {
     }, 1000 * 60 * 60);
 }
 
-export async function closeOldTabs(ageOfTabsInMilliseconds = MAX_TAB_AGE) {
+export async function closeOldTabs(ageOfTabsInMilliseconds = MAX_TAB_AGE, frozenTabAge = MAX_FROZEN_TAB_AGE) {
     console.log(
         `[Karim's Extension] Closing tabs older than ${ageOfTabsInMilliseconds} milliseconds`,
     );
@@ -72,6 +73,11 @@ export async function closeOldTabs(ageOfTabsInMilliseconds = MAX_TAB_AGE) {
     closeStats.skipped = closeStats.total = tabs.length;
     const now = Date.now();
     tabs.forEach((tab) => {
+
+        if (tab.pinned) {
+            return;
+        }
+
         if (
             tab.lastAccessed &&
             now - tab.lastAccessed > ageOfTabsInMilliseconds
@@ -96,13 +102,18 @@ export async function closeOldTabs(ageOfTabsInMilliseconds = MAX_TAB_AGE) {
         }
 
         if (tab.frozen) {
-            closeStats.closedForFrozen++;
-            closeStats.skipped--;
-            chrome.tabs.remove(tab.id, () => {
-                console.log(
-                    `[Karim's Extension] Closed tab with id: ${tab.id} due to being frozen.`,
-                );
-            });
+            if (
+                tab.lastAccessed &&
+                now - tab.lastAccessed > frozenTabAge
+            ) {
+                closeStats.closedForFrozen++;
+                closeStats.skipped--;
+                chrome.tabs.remove(tab.id, () => {
+                    console.log(
+                        `[Karim's Extension] Closed tab with id: ${tab.id} due to being frozen.`,
+                    );
+                });
+            }
         }
     })        
 
